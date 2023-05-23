@@ -21,6 +21,8 @@ let fourthDay = document.querySelector("#fourthDay");
 let fourthDayTemp = document.querySelector("#fourthDayTemp");
 let fifthDay = document.querySelector("#fifthDay");
 let fifthDayTemp = document.querySelector("#fifthDayTemp");
+let wind = document.querySelector("#wind");
+let humidity = document.querySelector("#humidity");
 
 let icon1 = document.querySelector("#icon1");
 let icon2 = document.querySelector("#icon2");
@@ -98,11 +100,13 @@ function fiveDayForecast(response) {
 
 function importWeather(response) {
   celsiusDegree = response.data.main.temp;
-  currentTemp.innerHTML = Math.floor(response.data.main.temp);
+  currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}`;
   description.innerHTML = response.data.weather[0].description;
-  highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
-  lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
+  highTemp.innerHTML = `High: ${Math.floor(response.data.main.temp_max)}`;
+  lowTemp.innerHTML = `Low: ${Math.floor(response.data.main.temp_min)}`;
   todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
+  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
+  wind.innerHTML = `Wind: ${response.data.wind.speed}`;
   icon1.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
@@ -111,14 +115,16 @@ function importWeather(response) {
   axios.get(daysApiUrl).then(fiveDayForecast);
 }
 
-function importWeatherByLoc(response) {
+function importWeatherByLocation(response) {
   h1.innerText = response.data.name;
   celsiusDegree = response.data.main.temp;
-  currentTemp.innerHTML = Math.floor(response.data.main.temp);
+  currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}`;
   description.innerHTML = response.data.weather[0].description;
   highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
   lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
   todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
+  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
+  wind.innerHTML = `Wind: ${response.data.wind.speed}`;
   icon1.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
@@ -130,7 +136,7 @@ function currentLocation(location) {
   let long = location.coords.longitude;
 
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(importWeatherByLoc);
+  axios.get(apiUrl).then(importWeatherByLocation);
 
   let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
   axios.get(daysApiUrl).then(fiveDayForecast);
