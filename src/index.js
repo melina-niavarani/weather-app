@@ -1,6 +1,7 @@
-// let celsius = true;
 let apiKey = "1bcc332eb77d8d56d5fa9270a4adc3a2";
 let showSearchInput = false;
+let celsiusDegree = null;
+
 let form = document.querySelector("#search-form");
 let searchBtn = document.querySelector("#search-btn");
 let h1 = document.querySelector("h1");
@@ -27,7 +28,6 @@ let icon3 = document.querySelector("#icon3");
 let icon4 = document.querySelector("#icon4");
 let icon5 = document.querySelector("#icon5");
 let icon6 = document.querySelector("#icon6");
-
 
 let days = [
   "Sun",
@@ -56,7 +56,7 @@ fifthDay.innerHTML = days[now.getDay() + 5];
 searchBtn.addEventListener("click", function () {
   showSearchInput = !showSearchInput;
   if (showSearchInput) {
-    form.innerHTML = `<input id="search-area" class="border border-4 border-dark-subtle rounded-pill placeholder-sm p-2 mb-2 w-75" type="search"  placeholder="Search">`;
+    form.innerHTML = `<input id="search-area" class="border border-4 border-dark-subtle rounded-pill placeholder-sm p-2 mt-2 mb-4 w-75" type="search"  placeholder="Search">`;
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       let searchInput = document.querySelector("#search-area");
@@ -76,8 +76,8 @@ function fiveDayForecast(response) {
   fifthDayTemp.innerHTML = `${Math.floor(response.data.list[4].main.temp)}°C`;
   icon2.setAttribute(
     "src",
-     `https://openweathermap.org/img/wn/${response.data.list[0].weather[0].icon}@2x.png`
-  )
+    `https://openweathermap.org/img/wn/${response.data.list[0].weather[0].icon}@2x.png`
+  );
   icon3.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.list[1].weather[0].icon}@2x.png`
@@ -96,9 +96,9 @@ function fiveDayForecast(response) {
   );
 }
 
-
 function importWeather(response) {
-  currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
+  celsiusDegree = response.data.main.temp;
+  currentTemp.innerHTML = Math.floor(response.data.main.temp);
   description.innerHTML = response.data.weather[0].description;
   highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
   lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
@@ -106,14 +106,15 @@ function importWeather(response) {
   icon1.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  )
+  );
   let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${h1.innerHTML}&appid=${apiKey}&units=metric`;
   axios.get(daysApiUrl).then(fiveDayForecast);
 }
 
-function importWeatherByLoc(response){
+function importWeatherByLoc(response) {
   h1.innerText = response.data.name;
-  currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
+  celsiusDegree = response.data.main.temp;
+  currentTemp.innerHTML = Math.floor(response.data.main.temp);
   description.innerHTML = response.data.weather[0].description;
   highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
   lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
@@ -121,7 +122,7 @@ function importWeatherByLoc(response){
   icon1.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  )
+  );
 }
 
 function currentLocation(location) {
@@ -141,17 +142,19 @@ function changeToCurrent() {
 
 currentLoc.addEventListener("click", changeToCurrent);
 
-// function changeTempType() {
-//   if (!celsius) {
-//     let fahrenheitTemperature = Math.round((weather[h1.innerHTML].temp * 9) / 5 + 32)
-//     currentTemp.innerHTML = `${fahrenheitTemperature}°F`;
-//   }else {
-//     currentTemp.innerHTML = `${weather[h1.innerHTML].temp}°C`
-//   }
-// }
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+let celsiusLink = document.querySelector("#celsius-link");
 
-// currentTemp.addEventListener('click', function(event){
-//   event.preventDefault()
-//   celsius = !celsius
-//   changeTempType()
-// })
+fahrenheitLink.addEventListener("click", function (event) {
+  event.preventDefault();
+  let fahrenheit = Math.round((celsiusDegree * 9) / 5 + 32);
+  currentTemp.innerHTML = fahrenheit;
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+});
+celsiusLink.addEventListener("click", function (event) {
+  event.preventDefault();
+  currentTemp.innerHTML = Math.round(celsiusDegree);
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+});
