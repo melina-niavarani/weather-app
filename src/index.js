@@ -8,6 +8,40 @@ let description = document.querySelector("#description");
 let highTemp = document.querySelector("#high");
 let lowTemp = document.querySelector("#low");
 let currentLoc = document.querySelector("#current-location");
+let todayTemp = document.querySelector("#todayTemp");
+let firstDay = document.querySelector("#firstDay");
+let firstDayTemp = document.querySelector("#firstDayTemp");
+let secondDay = document.querySelector("#secondDay");
+let secondDayTemp = document.querySelector("#secondDayTemp");
+let thirdDay = document.querySelector("#thirdDay");
+let thirdDayTemp = document.querySelector("#thirdDayTemp");
+let fourthDay = document.querySelector("#fourthDay");
+let fourthDayTemp = document.querySelector("#fourthDayTemp");
+let fifthDay = document.querySelector("#fifthDay");
+let fifthDayTemp = document.querySelector("#fifthDayTemp");
+
+let days = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+];
+let now = new Date();
+firstDay.innerHTML = days[now.getDay() + 1];
+secondDay.innerHTML = days[now.getDay() + 2];
+thirdDay.innerHTML = days[now.getDay() + 3];
+fourthDay.innerHTML = days[now.getDay() + 4];
+fifthDay.innerHTML = days[now.getDay() + 5];
 
 let apiKey = "1bcc332eb77d8d56d5fa9270a4adc3a2";
 
@@ -25,13 +59,24 @@ searchBtn.addEventListener("click", function () {
     });
   }
 });
+function fiveDayForecast() {
+  let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${h1.innerHTML}&appid=${apiKey}&units=metric`;
+  axios.get(daysApiUrl).then((response) => {
+    firstDayTemp.innerHTML = `${Math.floor(response.data.list[0].main.temp)}°C`;
+    secondDayTemp.innerHTML = `${Math.floor(response.data.list[1].main.temp)}°C`;
+    thirdDayTemp.innerHTML = `${Math.floor(response.data.list[2].main.temp)}°C`;
+    fourthDayTemp.innerHTML = `${Math.floor(response.data.list[3].main.temp)}°C`;
+    fifthDayTemp.innerHTML = `${Math.floor(response.data.list[4].main.temp)}°C`;
+  });
+}
 
 function importWeather(response) {
-  console.log(response);
   currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
   description.innerHTML = response.data.weather[0].description;
   highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
   lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
+  todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
+  fiveDayForecast();
 }
 
 function currentLocation(location) {
@@ -40,11 +85,13 @@ function currentLocation(location) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then((response) => {
     h1.innerText = response.data.name;
-    currentTemp.innerHTML = Math.floor(response.data.main.temp);
+    currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
     description.innerHTML = response.data.weather[0].description;
     highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
     lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
+      todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
   });
+  fiveDayForecast();
 }
 function changeToCurrent() {
   navigator.geolocation.getCurrentPosition(currentLocation);
