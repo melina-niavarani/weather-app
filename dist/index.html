@@ -19,7 +19,14 @@
             <section class="mt-4">
                 <h1> -- </h1>
                 <h5 id="date" class="opacity-75"></h5>
-                <h2 class="mt-3" id="temperature" role="button">16°C</h2>
+                <div>
+                    <strong class="mt-3 fs-2" id="temperature" role="button">16</strong>
+                    <span class="fs-4">
+                        <a class="text-decoration-none active" href="#" id="celsius-link">°C</a>
+                        |
+                        <a class="text-decoration-none" href="#" id="fahrenheit-link">°F</a>
+                    </span>
+                </div>
                 <h3 class="fw-normal" id="description">Partly Cloudy</h3>
                 <p class="fs-5">
                     <span id="high">H:25°</span> 
@@ -34,37 +41,37 @@
                         <h4 class="m-0 text-start col">TODAY</h4>
                         <div class="fs-4 col"><img id="icon1" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
                         </div>
-                        <div id="todayTemp" class="day-weather fs-5 col">15°C</div>
+                        <div id="todayTemp" class="day-weather fs-5 col">15 °C</div>
                     </li>
                     <li class="row align-items-center m-2 align-items-center justify-content-around border border-top-0 border-start-0 border-end-0 border-black">
                         <h4 id="firstDay" class=" m-0 text-start col">Thu</h4>
                         <div class="fs-4 col"><img id="icon2" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
                         </div>
-                        <div id="firstDayTemp" class="day-weather fs-5 col">15°C</div>
+                        <div id="firstDayTemp" class="day-weather fs-5 col">15 °C</div>
                     </li>
                     <li class="row align-items-center m-2 border border-top-0 border-start-0 border-end-0 border-black">
                         <h4 id="secondDay" class="col m-0 text-start">Fri</h4>
                         <div class="col fs-4"><img id="icon3" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
                         </div>
-                        <div id="secondDayTemp" class="day-weather fs-5 col">13°C</div>
+                        <div id="secondDayTemp" class="day-weather fs-5 col">13 °C</div>
                     </li>
                     <li class="row align-items-center m-2  border border-top-0 border-start-0 border-end-0 border-black">
                         <h4 id="thirdDay" class="col m-0 text-start">Sat</h4>
-                        <div class="col fs-4"><img id="icon4" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
+                        <div class="col fs-4 "><img id="icon4" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
                         </div>
-                        <div id="thirdDayTemp" class="day-weather fs-5 col">13°C</div>
+                        <div id="thirdDayTemp" class="day-weather fs-5 col">13 °C</div>
                     </li>
                     <li class="row align-items-center m-2  border border-top-0 border-start-0 border-end-0 border-black">
                         <h4 id="fourthDay" class="col m-0 text-start">Mon</h4>
                         <div class="col fs-4"><img id="icon5" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
                         </div>
-                        <div id="fourthDayTemp" class="day-weather fs-5 col">11°C</div>
+                        <div id="fourthDayTemp" class="day-weather fs-5 col">11 °C</div>
                     </li>
                     <li class="row align-items-center m-2">
                         <h4 id="fifthDay" class="col m-0 text-start">Tue</h4>
                         <div class="col fs-4"><img id="icon6" src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-icon">
                         </div>
-                        <div id="fifthDayTemp" class="day-weather fs-5 col">11°C</div>
+                        <div id="fifthDayTemp" class="day-weather fs-5 col">11 °C</div>
                     </li>
                 </ul>
             </section>
@@ -75,7 +82,7 @@
             </section>
             <form id="search-form"></form>
         </section>
-        <div class="text-center m-2"><a class="text-decoration-none" href="https://github.com/melina-niavarani/weather-app" target="_blank">Open-source code </a> by Melina Niav</div>
+        <div class="text-center m-2"><a class="text-decoration-none text-primary" href="https://github.com/melina-niavarani/weather-app" target="_blank">Open-source code </a> by Melina Niav</div>
     </div>
     <script src="/src.a2b27638.js"></script>
 </body>

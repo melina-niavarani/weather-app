@@ -1,15 +1,21 @@
 * {
-  font-family: "Roboto";
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #778ca3;
+    font-family: "Roboto";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #778ca3; 
+}
+.active {
+    color: black;
+    cursor: default;
 }
 @media (max-width: 700px) {
-  h4 {
-    font-size: 14px;
-  }
-  .day-weather {
-    font-size: 10px;
-  }
+    h4 {
+        font-size: 14px;
+    }
+    .day-weather {
+        font-size: 10px;
+    }
 }
+
+  
