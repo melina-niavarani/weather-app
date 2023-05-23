@@ -1,6 +1,6 @@
 let apiKey = "1bcc332eb77d8d56d5fa9270a4adc3a2";
 let showSearchInput = false;
-let celsiusDegree = null;
+let celsiusDegree = null
 
 let form = document.querySelector("#search-form");
 let searchBtn = document.querySelector("#search-btn");
@@ -10,17 +10,21 @@ let description = document.querySelector("#description");
 let highTemp = document.querySelector("#high");
 let lowTemp = document.querySelector("#low");
 let currentLoc = document.querySelector("#current-location");
-let todayTemp = document.querySelector("#todayTemp");
 let firstDay = document.querySelector("#firstDay");
-let firstDayTemp = document.querySelector("#firstDayTemp");
+let firstHigh = document.querySelector("#firstHigh");
+let firstLow = document.querySelector("#firstLow");
 let secondDay = document.querySelector("#secondDay");
-let secondDayTemp = document.querySelector("#secondDayTemp");
+let secondHigh = document.querySelector("#secondHigh");
+let secondLow = document.querySelector("#secondLow");
 let thirdDay = document.querySelector("#thirdDay");
-let thirdDayTemp = document.querySelector("#thirdDayTemp");
+let thirdHigh = document.querySelector("#thirdHigh");
+let thirdLow = document.querySelector("#thirdLow");
 let fourthDay = document.querySelector("#fourthDay");
-let fourthDayTemp = document.querySelector("#fourthDayTemp");
+let fourthHigh = document.querySelector("#fourthHigh");
+let fourthLow = document.querySelector("#fourthLow");
 let fifthDay = document.querySelector("#fifthDay");
-let fifthDayTemp = document.querySelector("#fifthDayTemp");
+let fifthHigh = document.querySelector("#fifthHigh");
+let fifthLow = document.querySelector("#fifthLow");
 let wind = document.querySelector("#wind");
 let humidity = document.querySelector("#humidity");
 
@@ -30,6 +34,7 @@ let icon3 = document.querySelector("#icon3");
 let icon4 = document.querySelector("#icon4");
 let icon5 = document.querySelector("#icon5");
 let icon6 = document.querySelector("#icon6");
+
 
 let days = [
   "Sun",
@@ -70,16 +75,21 @@ searchBtn.addEventListener("click", function () {
   }
 });
 
-function fiveDayForecast(response) {
-  firstDayTemp.innerHTML = `${Math.floor(response.data.list[0].main.temp)}°C`;
-  secondDayTemp.innerHTML = `${Math.floor(response.data.list[1].main.temp)}°C`;
-  thirdDayTemp.innerHTML = `${Math.floor(response.data.list[2].main.temp)}°C`;
-  fourthDayTemp.innerHTML = `${Math.floor(response.data.list[3].main.temp)}°C`;
-  fifthDayTemp.innerHTML = `${Math.floor(response.data.list[4].main.temp)}°C`;
+function sevenDayForecast(response) {
+  firstHigh.innerHTML = `${Math.floor(response.data.list[0].main.temp_max)}°C `;
+  firstLow.innerHTML = `${Math.floor(response.data.list[0].main.temp_min)}°C `;
+  secondHigh.innerHTML = `${Math.floor(response.data.list[1].main.temp_max)}°C `;
+  secondLow.innerHTML = `${Math.floor(response.data.list[1].main.temp_min)}°C `;
+  thirdHigh.innerHTML = `${Math.floor(response.data.list[2].main.temp_max)}°C `;
+  thirdLow.innerHTML = `${Math.floor(response.data.list[2].main.temp_min)}°C `;
+  fourthHigh.innerHTML = `${Math.floor(response.data.list[3].main.temp_max)}°C `;
+  fourthLow.innerHTML = `${Math.floor(response.data.list[3].main.temp_min)}°C `;
+  fifthHigh.innerHTML = `${Math.floor(response.data.list[4].main.temp_max)}°C `;
+  fifthLow.innerHTML = `${Math.floor(response.data.list[4].main.temp_min)}°C `;
   icon2.setAttribute(
     "src",
-    `https://openweathermap.org/img/wn/${response.data.list[0].weather[0].icon}@2x.png`
-  );
+     `https://openweathermap.org/img/wn/${response.data.list[0].weather[0].icon}@2x.png`
+  )
   icon3.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.list[1].weather[0].icon}@2x.png`
@@ -98,37 +108,36 @@ function fiveDayForecast(response) {
   );
 }
 
+
 function importWeather(response) {
-  celsiusDegree = response.data.main.temp;
+  celsiusDegree = response.data.main.temp
   currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}`;
   description.innerHTML = response.data.weather[0].description;
-  highTemp.innerHTML = `High: ${Math.floor(response.data.main.temp_max)}`;
-  lowTemp.innerHTML = `Low: ${Math.floor(response.data.main.temp_min)}`;
-  todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
-  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
-  wind.innerHTML = `Wind: ${response.data.wind.speed}`;
+  highTemp.innerHTML = `${Math.floor(response.data.main.temp_max)}°C `;
+  lowTemp.innerHTML = ` ${Math.floor(response.data.main.temp_min)}°C `;
+  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`
+  wind.innerHTML = `Wind: ${response.data.wind.speed}`
   icon1.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  );
+  )
   let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${h1.innerHTML}&appid=${apiKey}&units=metric`;
-  axios.get(daysApiUrl).then(fiveDayForecast);
+  axios.get(daysApiUrl).then(sevenDayForecast);
 }
 
-function importWeatherByLocation(response) {
+function importWeatherByLocation(response){
   h1.innerText = response.data.name;
-  celsiusDegree = response.data.main.temp;
+  celsiusDegree = response.data.main.temp
   currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}`;
   description.innerHTML = response.data.weather[0].description;
-  highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
-  lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
-  todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
-  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`;
-  wind.innerHTML = `Wind: ${response.data.wind.speed}`;
+  highTemp.innerHTML = `${Math.floor(response.data.main.temp_max)}°C `;
+  lowTemp.innerHTML = ` ${Math.floor(response.data.main.temp_min)}°C `;
+  humidity.innerHTML = `Humidity: ${response.data.main.humidity}`
+  wind.innerHTML = `Wind: ${response.data.wind.speed}`
   icon1.setAttribute(
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-  );
+  )
 }
 
 function currentLocation(location) {
@@ -139,7 +148,7 @@ function currentLocation(location) {
   axios.get(apiUrl).then(importWeatherByLocation);
 
   let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
-  axios.get(daysApiUrl).then(fiveDayForecast);
+  axios.get(daysApiUrl).then(sevenDayForecast);
 }
 
 function changeToCurrent() {
@@ -148,19 +157,20 @@ function changeToCurrent() {
 
 currentLoc.addEventListener("click", changeToCurrent);
 
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-let celsiusLink = document.querySelector("#celsius-link");
+let fahrenheitLink = document.querySelector("#fahrenheit-link")
+let celsiusLink = document.querySelector('#celsius-link')
 
-fahrenheitLink.addEventListener("click", function (event) {
-  event.preventDefault();
-  let fahrenheit = Math.round((celsiusDegree * 9) / 5 + 32);
-  currentTemp.innerHTML = fahrenheit;
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-});
-celsiusLink.addEventListener("click", function (event) {
-  event.preventDefault();
-  currentTemp.innerHTML = Math.round(celsiusDegree);
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
-});
+fahrenheitLink.addEventListener('click', function(event){
+  event.preventDefault()
+  let fahrenheit = Math.round((celsiusDegree * 9) / 5 + 32)
+  currentTemp.innerHTML = fahrenheit
+  celsiusLink.classList.remove("active")
+  fahrenheitLink.classList.add("active")
+})
+celsiusLink.addEventListener('click', function (event) {
+  event.preventDefault()
+  currentTemp.innerHTML = Math.round(celsiusDegree)
+  celsiusLink.classList.add("active")
+  fahrenheitLink.classList.remove("active")
+})
+
