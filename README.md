@@ -1,5 +1,3 @@
 # weather-app
-Created with CodeSandbox
-Pure html-css-javascript app 
-online weather app
-ajax weather with axios
+Created Pure html-css-javascript weather app with CodeSandbox. 
+Ajax weather by axios.
