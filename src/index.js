@@ -91,8 +91,17 @@ function currentLocation(location) {
     lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
       todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
   });
-  fiveDayForecast();
+  let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
+  axios.get(daysApiUrl).then((response1) => {
+    console.log(response1.data)
+    firstDayTemp.innerHTML = `${Math.floor(response1.data.list[0].main.temp)}°C`;
+    secondDayTemp.innerHTML = `${Math.floor(response1.data.list[1].main.temp)}°C`;
+    thirdDayTemp.innerHTML = `${Math.floor(response1.data.list[2].main.temp)}°C`;
+    fourthDayTemp.innerHTML = `${Math.floor(response1.data.list[3].main.temp)}°C`;
+    fifthDayTemp.innerHTML = `${Math.floor(response1.data.list[4].main.temp)}°C`;
+  });
 }
+
 function changeToCurrent() {
   navigator.geolocation.getCurrentPosition(currentLocation);
 }

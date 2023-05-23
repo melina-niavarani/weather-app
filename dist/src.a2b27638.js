@@ -190,7 +190,15 @@ function currentLocation(location) {
     lowTemp.innerHTML = "L: ".concat(Math.floor(response.data.main.temp_min));
     todayTemp.innerHTML = "".concat(Math.floor(response.data.main.temp), "\xB0C");
   });
-  fiveDayForecast();
+  var daysApiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=".concat(lat, "&lon=").concat(long, "&appid=").concat(apiKey, "&units=metric");
+  axios.get(daysApiUrl).then(function (response1) {
+    console.log(response1.data);
+    firstDayTemp.innerHTML = "".concat(Math.floor(response1.data.list[0].main.temp), "\xB0C");
+    secondDayTemp.innerHTML = "".concat(Math.floor(response1.data.list[1].main.temp), "\xB0C");
+    thirdDayTemp.innerHTML = "".concat(Math.floor(response1.data.list[2].main.temp), "\xB0C");
+    fourthDayTemp.innerHTML = "".concat(Math.floor(response1.data.list[3].main.temp), "\xB0C");
+    fifthDayTemp.innerHTML = "".concat(Math.floor(response1.data.list[4].main.temp), "\xB0C");
+  });
 }
 function changeToCurrent() {
   navigator.geolocation.getCurrentPosition(currentLocation);
