@@ -1,4 +1,5 @@
 // let celsius = true;
+let apiKey = "1bcc332eb77d8d56d5fa9270a4adc3a2";
 let showSearchInput = false;
 let form = document.querySelector("#search-form");
 let searchBtn = document.querySelector("#search-btn");
@@ -20,6 +21,13 @@ let fourthDayTemp = document.querySelector("#fourthDayTemp");
 let fifthDay = document.querySelector("#fifthDay");
 let fifthDayTemp = document.querySelector("#fifthDayTemp");
 
+let icon1 = document.querySelector("#icon1");
+let icon2 = document.querySelector("#icon2");
+let icon3 = document.querySelector("#icon3");
+let icon4 = document.querySelector("#icon4");
+let icon5 = document.querySelector("#icon5");
+let icon6 = document.querySelector("#icon6");
+
 let days = [
   "Sun",
   "Mon",
@@ -36,14 +44,13 @@ let days = [
   "Fri",
   "Sat",
 ];
+
 let now = new Date();
 firstDay.innerHTML = days[now.getDay() + 1];
 secondDay.innerHTML = days[now.getDay() + 2];
 thirdDay.innerHTML = days[now.getDay() + 3];
 fourthDay.innerHTML = days[now.getDay() + 4];
 fifthDay.innerHTML = days[now.getDay() + 5];
-
-let apiKey = "1bcc332eb77d8d56d5fa9270a4adc3a2";
 
 searchBtn.addEventListener("click", function () {
   showSearchInput = !showSearchInput;
@@ -59,15 +66,33 @@ searchBtn.addEventListener("click", function () {
     });
   }
 });
-function fiveDayForecast() {
-  let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${h1.innerHTML}&appid=${apiKey}&units=metric`;
-  axios.get(daysApiUrl).then((response) => {
-    firstDayTemp.innerHTML = `${Math.floor(response.data.list[0].main.temp)}°C`;
-    secondDayTemp.innerHTML = `${Math.floor(response.data.list[1].main.temp)}°C`;
-    thirdDayTemp.innerHTML = `${Math.floor(response.data.list[2].main.temp)}°C`;
-    fourthDayTemp.innerHTML = `${Math.floor(response.data.list[3].main.temp)}°C`;
-    fifthDayTemp.innerHTML = `${Math.floor(response.data.list[4].main.temp)}°C`;
-  });
+
+function fiveDayForecast(response) {
+  firstDayTemp.innerHTML = `${Math.floor(response.data.list[0].main.temp)}°C`;
+  secondDayTemp.innerHTML = `${Math.floor(response.data.list[1].main.temp)}°C`;
+  thirdDayTemp.innerHTML = `${Math.floor(response.data.list[2].main.temp)}°C`;
+  fourthDayTemp.innerHTML = `${Math.floor(response.data.list[3].main.temp)}°C`;
+  fifthDayTemp.innerHTML = `${Math.floor(response.data.list[4].main.temp)}°C`;
+  icon2.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.list[0].weather[0].icon}@2x.png`
+  );
+  icon3.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.list[1].weather[0].icon}@2x.png`
+  );
+  icon4.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.list[2].weather[0].icon}@2x.png`
+  );
+  icon5.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.list[3].weather[0].icon}@2x.png`
+  );
+  icon6.setAttribute(
+    "src",
+    `https://openweathermap.org/img/wn/${response.data.list[4].weather[0].icon}@2x.png`
+  );
 }
 
 function importWeather(response) {
@@ -76,30 +101,28 @@ function importWeather(response) {
   highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
   lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
   todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
-  fiveDayForecast();
+  let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${h1.innerHTML}&appid=${apiKey}&units=metric`;
+  axios.get(daysApiUrl).then(fiveDayForecast);
+}
+
+function importWeatherByLoc(response) {
+  h1.innerText = response.data.name;
+  currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
+  description.innerHTML = response.data.weather[0].description;
+  highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
+  lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
+  todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
 }
 
 function currentLocation(location) {
   let lat = location.coords.latitude;
   let long = location.coords.longitude;
+
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then((response) => {
-    h1.innerText = response.data.name;
-    currentTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
-    description.innerHTML = response.data.weather[0].description;
-    highTemp.innerHTML = `H: ${Math.floor(response.data.main.temp_max)}`;
-    lowTemp.innerHTML = `L: ${Math.floor(response.data.main.temp_min)}`;
-      todayTemp.innerHTML = `${Math.floor(response.data.main.temp)}°C`;
-  });
+  axios.get(apiUrl).then(importWeatherByLoc);
+
   let daysApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=metric`;
-  axios.get(daysApiUrl).then((response1) => {
-    console.log(response1.data)
-    firstDayTemp.innerHTML = `${Math.floor(response1.data.list[0].main.temp)}°C`;
-    secondDayTemp.innerHTML = `${Math.floor(response1.data.list[1].main.temp)}°C`;
-    thirdDayTemp.innerHTML = `${Math.floor(response1.data.list[2].main.temp)}°C`;
-    fourthDayTemp.innerHTML = `${Math.floor(response1.data.list[3].main.temp)}°C`;
-    fifthDayTemp.innerHTML = `${Math.floor(response1.data.list[4].main.temp)}°C`;
-  });
+  axios.get(daysApiUrl).then(fiveDayForecast);
 }
 
 function changeToCurrent() {

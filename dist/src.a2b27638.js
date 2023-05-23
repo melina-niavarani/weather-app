@@ -139,6 +139,7 @@ var fourthDay = document.querySelector("#fourthDay");
 var fourthDayTemp = document.querySelector("#fourthDayTemp");
 var fifthDay = document.querySelector("#fifthDay");
 var fifthDayTemp = document.querySelector("#fifthDayTemp");
+var icon1 = document.querySelector("#icon1");
 var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var now = new Date();
 firstDay.innerHTML = days[now.getDay() + 1];
@@ -163,6 +164,7 @@ searchBtn.addEventListener("click", function () {
 function fiveDayForecast() {
   var daysApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=".concat(h1.innerHTML, "&appid=").concat(apiKey, "&units=metric");
   axios.get(daysApiUrl).then(function (response) {
+    console.log(response.data.list[0].weather[0].icon);
     firstDayTemp.innerHTML = "".concat(Math.floor(response.data.list[0].main.temp), "\xB0C");
     secondDayTemp.innerHTML = "".concat(Math.floor(response.data.list[1].main.temp), "\xB0C");
     thirdDayTemp.innerHTML = "".concat(Math.floor(response.data.list[2].main.temp), "\xB0C");
